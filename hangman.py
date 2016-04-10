@@ -14,7 +14,7 @@ clue = 0
 def gui():
     global word, word_length, clue
     dictionary = ["unstoppable","interstellar","divergent","insurgent","fargo","aliens","species"]
-    word = random.choice(dictionary)
+    word = choice(dictionary)
     word_length = len(word)
     clue = word_length * ["_"]
     tries = 6
@@ -94,6 +94,8 @@ def gui():
         if first_index == -1:
             letters_wrong +=1
             incorrect_guesses.set(letters_wrong)
+            result_text = "Sorry We are not looking for " + letter
+            result_set.set(result_text)
         else:
             for i in range(word_length):
                 if letter == word[i]:
@@ -101,6 +103,7 @@ def gui():
         hangedman(letters_wrong)
         clue_set = " ".join(clue)
         word_output.set(clue_set)
+        
         if letters_wrong == tries:
             result_text = "Game Over. The word was " + word
             result_set.set(result_text)
@@ -135,7 +138,7 @@ def gui():
     hm_window = Toplevel()
     hm_window.title ("Hangman")
     incorrect_guesses = IntVar()
-    incorrect.guesses.set(0)
+    incorrect_guesses.set(0)
     player_score = IntVar()
     computer_score = IntVar()
     result_set = StringVar()
@@ -161,6 +164,7 @@ def gui():
     Label(hm_frame, text="Losses").grid(column=3,row=7,sticky=W)
     Label(hm_frame, textvariable = computer_score).grid(column=3, row=8, sticky=W)
     Label(hm_frame, textvariable = result_set).grid(column=2, row=9)
-    replay_button = button(hm_frame, text="Reset", command = reset_game).grid(column=2, row=10)
+    replay_button = Button(hm_frame, text="Reset", command = reset_game).grid(column=2, row=10)
+
 if __name__ == '__main__':
     gui()
